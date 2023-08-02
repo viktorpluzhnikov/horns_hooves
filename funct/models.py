@@ -29,7 +29,6 @@ class Product(models.Model):
         return f'Продукт: {self.name} | Категория: {self.category.name}'
 
 
-#модель на категории получаем все товары по категории
 class Categories(models.Model):
     name_category = models.ManyToManyField(ProductCategory)
     name_product = models.ManyToManyField(Product)
@@ -53,26 +52,3 @@ class CartProduct(models.Model):
 
     def __str__(self):
         return f"{self.quantity} of {self.product.name}"
-
-    # def get_total_item_price(self):
-    #     return self.quantity*self.product.price
-    #
-    # def get_final_price(self):
-    #     return self.get_total_item_price()
-
-
-# class Order(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     product = models.ForeignKey(OrderItem, on_delete=models.CASCADE)
-#     start_date = models.DateTimeField(auto_now=True)
-#     ordered_date = models.DateTimeField()
-#     ordered = models.BooleanField(default=False)
-#
-#     def __str__(self):
-#         return self.user
-
-    # def get_total(self):
-    #     total = 0
-    #     for order_item in self.product.all():
-    #         total += order_item.get_final_price()
-    #     return total
