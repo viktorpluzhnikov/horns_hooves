@@ -6,7 +6,6 @@ from .serializers import UserSerializer, ProductCategorySerializer, ProductSeria
 from rest_framework.response import Response
 
 
-
 class ProductPagination(LimitOffsetPagination):
     default_limit = 10
 
