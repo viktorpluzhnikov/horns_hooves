@@ -160,5 +160,22 @@ REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.AdminRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
+    ],
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend'
     ]
 }
+
+# REST_FRAMEWORK = {
+#     'EXCEPTION_HANDLER': 'utils.handlers.exceptions_handler',
+#     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.AcceptHeaderVersioning',
+#     'DEFAULT_AUTHENTICATION_CLASSES': [
+#         'rest_framework_simplejwt.authentication.JWTAuthentication'
+#     ],
+#     'DEFAULT_PERMISSION_CLASSES': [
+#         'rest_framework.permissions.IsAuthenticated'
+#     ] if not env('AUTH_PERMISSION_OFF', default=None) else [],
+#     'DEFAULT_RENDERER_CLASSES': [
+#         'utils.renderers.ApiRenderer'
+#     ]
+# }

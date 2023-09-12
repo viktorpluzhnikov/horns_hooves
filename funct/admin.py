@@ -1,9 +1,13 @@
 from django.contrib import admin
-from .models import Product, ProductCategory, Basket, Categories, CartProduct
+#from .models import Product, ProductCategory, Basket, Categories, CartProduct
 
 
-admin.site.register(ProductCategory)
-admin.site.register(Product)
-admin.site.register(Basket)
-admin.site.register(Categories)
-admin.site.register(CartProduct)
+# admin.site.register(ProductCategory)
+# admin.site.register(Product)
+# admin.site.register(Basket)
+# admin.site.register(Categories)
+# admin.site.register(CartProduct)
+
+# from product_category.models import ProductCategory
+#
+# admin.site.register(ProductCategory)
