@@ -12,9 +12,9 @@ class Cart(models.Model):
         def __str__(self):
             return f'Корзина пользователя {self.user}'
 
-        # def sum(self):
-        #     return self.quantity * self.product.price
-        #
+        def sum(self):
+            return self.quantity * self.product.price
+
         # def total_quantity(self):
         #     carts = Cart.objects.filter(user=self.user)
         #     return sum(cart.quantity for cart in carts)
