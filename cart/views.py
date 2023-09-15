@@ -25,7 +25,7 @@ class CartView(APIView):
     """Добавление товара в корзину"""
     def post(self, request):
         cart = Cart(
-            products=Product.objects.filter(pk=request.data.get("product")),
+            product=Product.objects.get(pk=request.data.get("product")),
             quantity=request.data.get("quantity"),
             price=request.data.get("price"),
             user_id=request.user.id
@@ -51,18 +51,18 @@ class CartView(APIView):
 class CartDetailView(APIView):
     permission_classes = [IsAuthenticated]
     """Получение конкретного продукта"""
-    def get(self, request, pk):
-        cart = Cart.objects.filter(pk=pk, user_id=request.user.id).first()
-        serializer = CartResponseSerializer(cart)
+    def get(self, request):
+        cart = Cart.objects.filter(user_id=request.user.id)
+        serializer = CartResponseSerializer(cart, many=True)
         return Response(serializer.data)
 
     """Изменение конкретного товара"""
-    def put(self, request, pk):
-        product = Cart.objects.filter(pk=pk, user_id=request.user.id).first()
+    def put(self, request, pk):   #передавать айдишник продукта
+        product = Cart.objects.filter(pk=pk, user_id=request.user.id).update("поля все указать")
         serializer = CartResponseSerializer(product, data=request.data)
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
+            serializer.save()                          #сериалайзеры используют только на входе. не использовать в середине кода. использовать лоучше пайдантик модели
+            return Response(serializer.data)            #либо продукт либо рк
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     """Удаление конкретного товара из корзины"""
     def delete(self, request, pk):
