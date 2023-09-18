@@ -15,7 +15,7 @@ class CartView(APIView):
         cart = Cart(
             product=Product.objects.get(pk=request.data.get("product")),
             quantity=request.data.get("quantity"),
-            price=request.data.get("price"),
+            price=Product.objects.filter(id=request.data.get("product")).first().price,
             user_id=request.user.id
         )
         cart.save()
