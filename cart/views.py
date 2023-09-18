@@ -1,24 +1,12 @@
-from django.shortcuts import render
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
-from .serializers import CartSerializer, CartResponseSerializer
-from .permissions import IsOwner
+from .serializers import CartSerializer, CartUpdateSerializer
 from .models import Cart
 from rest_framework.views import APIView
 from products.models import Product
 from rest_framework.response import Response
 from rest_framework import status
 
-
-# class CartView(generics.RetrieveAPIView):
-#     permission_classes = [IsAuthenticated]
-#     queryset = Cart.objects.all()
-#     serializer_class = CartSerializer
-#
-#     def get_object(self):
-#         user = self.request.user
-#         cart = Cart.objects.get_or_create(user=user)
-#         return cart
 
 class CartView(APIView):
     permission_classes = [IsAuthenticated]
@@ -33,46 +21,90 @@ class CartView(APIView):
         cart.save()
         serializer = CartSerializer(cart)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    """Просмотр всех товаров в корзине"""
-    def get(self, request):
-        cart = Cart.objects.filter(user_id=request.user.id).all()
-        serializer = CartResponseSerializer(cart, many=True)
-        return Response(serializer.data)
-    """Удаление всех товаров в корзине"""
-    def delete(self, request):
-        cart = Cart.objects.filter(user_id=request.user.id).all()
-        cart.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
 
-    def sum(self):
-        return self.cart.quantity * self.cart.product.price
+    # """Просмотр всех товаров в корзине"""
+    # def get(self, request):
+    #     cart = Cart.objects.filter(user_id=request.user.id).all()
+    #     serializer = CartSerializer(cart, many=True)
+    #     return Response(serializer.data)
+    # """Удаление всех товаров в корзине"""
+    # def delete(self, request):
+    #     cart = Cart.objects.filter(user_id=request.user.id).all()
+    #     cart.delete()
+    #     return Response(status=status.HTTP_204_NO_CONTENT)
+    #
+    # def sum(self):
+    #     return self.cart.quantity * self.cart.product.price
 
 
-class CartDetailView(APIView):
+class CartList(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
-    """Получение конкретного продукта"""
-    def get(self, request):
-        cart = Cart.objects.filter(user_id=request.user.id)
-        serializer = CartResponseSerializer(cart, many=True)
-        return Response(serializer.data)
+    serializer_class = CartSerializer
+    """GET - Корзина авторизованного пользователя"""
+    def get_queryset(self):
+        user = self.request.user.pk
+        return Cart.objects.filter(user_id=user)
 
-    """Изменение конкретного товара"""
-    def put(self, request, pk):   #передавать айдишник продукта
-        product = Cart.objects.filter(pk=pk, user_id=request.user.id).update("поля все указать")
-        serializer = CartResponseSerializer(product, data=request.data)
-        if serializer.is_valid():
-            serializer.save()                          #сериалайзеры используют только на входе. не использовать в середине кода. использовать лоучше пайдантик модели
-            return Response(serializer.data)            #либо продукт либо рк
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    """Удаление конкретного товара из корзины"""
-    def delete(self, request, pk):
-        cart = Cart.objects.filter(pk=pk, user_id=request.user.id).first()
-        cart.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+
+class CartDetail(generics.RetrieveUpdateDestroyAPIView):
+    """PUT, DELETE"""
+    permission_classes = [IsAuthenticated]
+    #queryset = Cart.objects.all()
+    serializer_class = CartUpdateSerializer
+
+    def get_queryset(self):
+        user = self.request.user.pk
+        return Cart.objects.filter(user_id=user)
 
 
 
 
+
+
+
+
+
+
+
+# class CartDetailView(APIView):
+#     permission_classes = [IsAuthenticated]
+#     """Получение конкретного продукта"""
+#     def get(self, request, pk):
+#         cart = Cart.objects.filter(pk=pk, user_id=request.user.id)
+#         serializer = CartUpdateSerializer(cart, many=True)
+#         return Response(serializer.data)
+#
+#     """Изменение конкретного товара"""
+#     def put(self, request, pk):   #передавать айдишник продукта
+#         product = Cart.objects.filter(pk=pk, user_id=request.user.id).update('quantity')
+#         serializer = CartSerializer(product, data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()                          #сериалайзеры используют только на входе. не использовать в середине кода. использовать лоучше пайдантик модели
+#             return Response(serializer.data)            #либо продукт либо рк
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#     """Удаление конкретного товара из корзины"""
+#     def delete(self, request, pk):
+#         cart = Cart.objects.filter(pk=pk, user_id=request.user.id).first()
+#         cart.delete()
+#         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+# class CartUpdateView(generics.GenericAPIView,
+#                      mixins.DestroyModelMixin,
+#                      mixins.RetrieveModelMixin,
+#                      mixins.UpdateModelMixin):
+#     permission_classes = [IsAuthenticated]
+#     queryset = Cart.objects.all()
+#     serializer_class = CartUpdateSerializer
+#
+#     def get(self, request, *args, **kwargs):
+#         return self.retrieve(request, *args, **kwargs)
+#
+#     def put(self, request, *args, **kwargs):
+#         return self.update(request, *args, **kwargs)
+#
+#     def delete(self, request, *args, **kwargs):
+#         return self.destroy(request, *args, **kwargs)
 
 
 

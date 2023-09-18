@@ -23,7 +23,7 @@ class CartRequestSerializer(serializers.Serializer):
 #         return instance
 
 
-class CartResponseSerializer(ModelSerializer):
+class CartUpdateSerializer(ModelSerializer):
 
     class Meta:
         model = Cart
