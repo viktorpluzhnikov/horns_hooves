@@ -34,8 +34,8 @@ class OrderView(APIView):
         )
         order.save()
         for item in cart:
-            order.products.add(item.product)
-            #order.quantity.append(item.quantity)
+            order.products.add(item.product)   #Попробовать set а не add
+            #order.quantity.append(item.quantity)           #Логгирование запросов посмотреть
         order.save()
         cart.delete()
         serializer = OrderSerializer(order)

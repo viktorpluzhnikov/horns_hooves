@@ -10,3 +10,6 @@ class Order(models.Model):
     delivery_address = models.TextField()
     payment_method = models.TextField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'Заказ пользователя {self.user}'
