@@ -7,6 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 
 
 class ProductCategoryView(generics.ListCreateAPIView):
+    """POST"""
     queryset = ProductCategory.objects.all()
     serializer_class = ProductCategorySerializer
 
