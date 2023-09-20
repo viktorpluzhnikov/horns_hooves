@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'order',
     'drf_yasg',
 
+
 ]
 
 MIDDLEWARE = [
