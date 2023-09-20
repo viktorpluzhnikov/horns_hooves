@@ -5,6 +5,8 @@ from .serializers import ProductCategorySerializer
 from .models import ProductCategory
 from rest_framework.permissions import IsAuthenticated
 
+from rest_framework.viewsets import ModelViewSet
+
 
 class ProductCategoryView(generics.ListCreateAPIView):
     """POST"""
@@ -19,3 +21,9 @@ class ProductCategoryDetailView(APIView):
         products = ProductCategory.objects.filter(pk=pk).first()
         serializer = ProductCategorySerializer(products)
         return Response(serializer.data)
+
+
+class CategoryPost(ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    queryset = ProductCategory.objects.all()
+    serializer_class = ProductCategorySerializer

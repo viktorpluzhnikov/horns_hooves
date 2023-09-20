@@ -13,8 +13,8 @@ class Cart(models.Model):
     def __str__(self):
         return f'Корзина пользователя {self.user}'
 
-    class Meta:
-        app_label = 'cart'
+    # class Meta:
+    #     app_label = 'cart'
 
     # def sum(self):
     #     return self.quantity * self.product.price
