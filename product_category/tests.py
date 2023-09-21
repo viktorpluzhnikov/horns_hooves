@@ -2,8 +2,6 @@ from django.test import TestCase
 from rest_framework.test import APIRequestFactory
 from rest_framework import status
 from product_category.views import CategoryPost
-# factory = APIRequestFactory()
-# request = factory.post('categories/', {'name': 'new_idea'})
 
 
 class TestCategoryViewSet(TestCase):
