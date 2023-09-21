@@ -6,12 +6,14 @@ services:
       privileged: true
       ports:
         - "5432:5432"
+      volumes:
+      - '/postgres_data:/var/lib/postgresql'
       environment:
         POSTGRES_USER: postgres
         POSTGRES_PASSWORD: 1234
         POSTGRES_DB: postgres
-#  adminer:
-#      image: adminer
+#  adminer:                           #для проверки работоспособности
+#      image: adminer                 #позволяет подключиться к базе данных после запуска контейнера
 #      restart: always
 #      ports:
 #        - "8080:8080"
@@ -23,7 +25,7 @@ services:
     ports:
       - "8080:8080"
     command: bash -c "
-      ./wait-for-postgres.sh db
+      ./wait-for-postgres.sh db       #нужно, чтобы дождаться готовности БД перед выполнением миграций
       && python manage.py migrate
       && python manage.py runserver 0.0.0.0:8080
       "
@@ -31,3 +33,19 @@ services:
       - db
 
 #     && python manage.py create_data
+
+# сервер запускается на http://127.0.0.1:8080/
+
+# docker-compose up --build
+
+# Wait-for-postgres.sh
+
+#Хоть контейнер backend и стартует после
+#контейнера db, но для полного запуска базы нужно определённое время.
+#При попытке выполнить миграции может возникнуть ситуация, когда база данных
+#ещё не готова, и возникнет ошибка
+
+#docker-compose up --build --remove-orphans
+
+#Ключ remove-orphans нужен, потому что мы удалили контейнер adminer и Docker не знает,
+#переименовали мы контейнер или создали новый.
