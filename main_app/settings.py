@@ -115,7 +115,7 @@ WSGI_APPLICATION = 'main_app.wsgi.application'
 #         'PORT': 5432,
 #     }
 # }
-
+# Для докера указываем 'HOST' : db а не localhost
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
