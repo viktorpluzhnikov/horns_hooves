@@ -12,4 +12,4 @@ class CartUpdateSerializer(ModelSerializer):
 
     class Meta:
         model = Cart
-        fields = ['quantity', 'product']
+        fields = ['product', 'quantity']

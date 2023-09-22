@@ -30,3 +30,4 @@ tzdata==2023.3
 uritemplate==4.1.1
 urllib3==2.0.5
 zipp==3.16.2
+dadata==21.10.1

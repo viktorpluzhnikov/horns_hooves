@@ -26,7 +26,7 @@ class CartView(APIView):
         cart = Cart(
             product=Product.objects.get(pk=request.data.get("product")),
             quantity=request.data.get("quantity"),
-            price=Product.objects.filter(id=request.data.get("product")).first().price,
+            price=Product.objects.filter(id=request.data.get("product")).first().price * request.data.get("quantity"),
             user_id=request.user.id
         )
         cart.save()
@@ -59,8 +59,8 @@ class CartList(generics.ListAPIView):
 
 class CartDetail(generics.RetrieveUpdateDestroyAPIView):
     """PUT, DELETE"""
+    http_method_names = ['put', 'delete']
     permission_classes = [IsAuthenticated]
-    #queryset = Cart.objects.all()
     serializer_class = CartUpdateSerializer
 
     def get_queryset(self):
