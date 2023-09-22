@@ -15,7 +15,7 @@ class CartView(APIView):
 
     @swagger_auto_schema(
         operation_summary="Добавление товара в корзину",
-        request_body=CartSerializer,
+        request_body=CartUpdateSerializer,
         responses={
             201: CartSerializer,
             400: "Неправильный ввод данных",

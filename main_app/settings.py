@@ -12,12 +12,6 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import sys
-from dadata import Dadata
-
-
-token = "17bb15eedc972f4256842981132c365bc811966d"
-secret = "a884dbb8cf666fd58ffd2c50f177b240e858a661"
-dadata = Dadata(token, secret)
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -66,9 +60,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    #'rest_framework.middleware.AuthenticationMiddleware',
-    #'rest_framework.middleware.AuthorizationMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware'
 ]
 
 ROOT_URLCONF = 'main_app.urls'
@@ -99,11 +91,7 @@ WSGI_APPLICATION = 'main_app.wsgi.application'
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
 #         'NAME': BASE_DIR / 'db.sqlite3',
-#     },
-#     # 'testing_db': {
-#     #     'ENGINE': 'django.db.backends.sqlite3',
-#     #     'NAME': BASE_DIR / 'db.sqlite3',
-#     # },
+#     }
 # }
 # if 'test' in sys.argv:
 #     DATABASES['default'] = {
@@ -121,7 +109,9 @@ WSGI_APPLICATION = 'main_app.wsgi.application'
 #         'PORT': 5432,
 #     }
 # }
+
 # Для докера указываем 'HOST' : db а не localhost
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -132,17 +122,6 @@ DATABASES = {
         'PORT': 5432,
     }
 }
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'horns_hooves_db',
-#         'USER': 'root',
-#         'PASSWORD': 'sc6h9mk5',
-#         'HOST': 'localhost',
-#         'PORT': '3306',
-#     }
-# }
 
 
 # Password validation
@@ -204,17 +183,3 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }
-
-# REST_FRAMEWORK = {
-#     'EXCEPTION_HANDLER': 'utils.handlers.exceptions_handler',
-#     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.AcceptHeaderVersioning',
-#     'DEFAULT_AUTHENTICATION_CLASSES': [
-#         'rest_framework_simplejwt.authentication.JWTAuthentication'
-#     ],
-#     'DEFAULT_PERMISSION_CLASSES': [
-#         'rest_framework.permissions.IsAuthenticated'
-#     ] if not env('AUTH_PERMISSION_OFF', default=None) else [],
-#     'DEFAULT_RENDERER_CLASSES': [
-#         'utils.renderers.ApiRenderer'
-#     ]
-# }

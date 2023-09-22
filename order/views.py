@@ -1,6 +1,4 @@
 import dadata
-from dadata import Dadata
-from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import generics
 from rest_framework.views import APIView
@@ -12,11 +10,10 @@ from cart.models import Cart
 from .models import Order
 
 from dadata import Dadata
+
 token = "17bb15eedc972f4256842981132c365bc811966d"
 secret = "a884dbb8cf666fd58ffd2c50f177b240e858a661"
 dadata = Dadata(token, secret)
-
-
 
 
 class OrderView(APIView):
@@ -34,8 +31,8 @@ class OrderView(APIView):
     )
     def post(self, request):
         cart = Cart.objects.filter(user_id=request.user.id).all()
-        # if cart in None:
-        #     return Response(status=status.HTTP_404_NOT_FOUND)
+        if len(cart) == 0:
+            return Response(status=status.HTTP_404_NOT_FOUND)
         order = Order(
             delivery_address=request.data.get("delivery_address"),
             payment_method=request.data.get("payment_method"),
