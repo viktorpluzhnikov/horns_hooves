@@ -20,4 +20,4 @@ class ProductView(generics.ListAPIView):
 
         return queryset
 
-#http://127.0.0.1:8000/product_price/?min_price=10&max_price=50
+#http://127.0.0.1:8000/products/?min_price=10&max_price=50
