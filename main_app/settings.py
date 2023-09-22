@@ -12,6 +12,12 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import sys
+from dadata import Dadata
+
+
+token = "17bb15eedc972f4256842981132c365bc811966d"
+secret = "a884dbb8cf666fd58ffd2c50f177b240e858a661"
+dadata = Dadata(token, secret)
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -122,7 +128,7 @@ DATABASES = {
         'NAME': 'postgres',
         'USER': 'postgres',
         'PASSWORD': '1234',
-        'HOST': 'db',
+        'HOST': 'localhost',
         'PORT': 5432,
     }
 }
