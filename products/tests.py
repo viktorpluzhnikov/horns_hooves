@@ -3,7 +3,7 @@ from rest_framework.test import APIRequestFactory, force_authenticate
 from rest_framework import status
 from django.contrib.auth.models import User
 from products.models import Product
-from products.views import ProductCategoryListView
+from products.views import ProductView
 from product_category.models import ProductCategory
 
 
@@ -18,6 +18,6 @@ class TestProductViewSet(TestCase):
         factory = APIRequestFactory()
         request = factory.get('/product/')
         force_authenticate(request, self.admin)
-        view = ProductCategoryListView.as_view({'get': 'list'})
+        view = ProductView.as_view()
         response = view(request)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
